@@ -1,0 +1,888 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feedback Skills & Style – ScholarNest</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --ch7: #0d9488;    /* teal for ch7 */
+    --ch7d: #0f766e;
+    --ch7l: #ccfbf1;
+    --ch9: #7c3aed;    /* violet for ch9 */
+    --ch9d: #6d28d9;
+    --ch9l: #ede9fe;
+    --gold: #f59e0b;
+    --bg: #f8f7ff;
+    --card: #ffffff;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --green: #059669;
+    --red: #dc2626;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--ink); line-height: 1.7; }
+
+  /* ── HEADER ── */
+  header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #134e4a 100%);
+    color: white;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .header-inner { max-width: 1100px; margin: 0 auto; padding: 28px 32px 44px; position: relative; z-index: 1; }
+
+  .logo-row { display: flex; align-items: center; gap: 14px; margin-bottom: 36px; }
+  .logo-mark {
+    width: 44px; height: 44px;
+    background: linear-gradient(135deg, var(--ch7), var(--ch9));
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px;
+    box-shadow: 0 4px 15px rgba(13,148,136,0.4);
+  }
+  .logo-text { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; }
+  .logo-text span { color: #5eead4; }
+
+  .chapters-row { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+  .ch-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    border-radius: 100px;
+    padding: 7px 18px;
+    font-size: 13px; font-weight: 700;
+    letter-spacing: 0.5px;
+  }
+  .ch7-badge { background: rgba(13,148,136,0.25); border: 1px solid rgba(94,234,212,0.35); color: #5eead4; }
+  .ch9-badge { background: rgba(124,58,237,0.25); border: 1px solid rgba(196,181,253,0.35); color: #c4b5fd; }
+
+  header h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem,4.5vw,3.2rem); font-weight: 900; line-height: 1.15; margin-bottom: 16px; }
+  header h1 .t { color: #5eead4; }
+  header h1 .v { color: #c4b5fd; }
+  header p.subtitle { font-size: 1rem; color: rgba(255,255,255,0.65); max-width: 640px; margin-bottom: 32px; }
+
+  .toc-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+  .toc-pills a {
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.14);
+    color: rgba(255,255,255,0.8); text-decoration: none;
+    font-size: 11.5px; font-weight: 500; padding: 6px 13px; border-radius: 100px;
+    transition: all .2s;
+  }
+  .toc-pills a.t:hover { background: var(--ch7); border-color: var(--ch7); color: white; }
+  .toc-pills a.v:hover { background: var(--ch9); border-color: var(--ch9); color: white; }
+
+  /* ── CHAPTER DIVIDER ── */
+  .chapter-banner {
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 40px;
+    display: flex; align-items: center; gap: 16px;
+  }
+  .ch7-banner { background: linear-gradient(135deg, #0d9488, #14b8a6); color: white; }
+  .ch9-banner { background: linear-gradient(135deg, #7c3aed, #a78bfa); color: white; }
+  .banner-num { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; opacity: 0.3; line-height: 1; }
+  .banner-content h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 700; }
+  .banner-content p { font-size: 0.88rem; opacity: 0.85; margin-top: 4px; }
+
+  /* ── LAYOUT ── */
+  main { max-width: 1100px; margin: 0 auto; padding: 48px 32px; }
+  .section { margin-bottom: 60px; }
+  .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+  .section-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 17px; flex-shrink: 0; }
+  .ic-teal { background: #ccfbf1; }
+  .ic-violet { background: #ede9fe; }
+  .ic-blue { background: #dbeafe; }
+  .ic-green { background: #d1fae5; }
+  .ic-orange { background: #ffedd5; }
+  .ic-red { background: #fee2e2; }
+  .ic-pink { background: #fce7f3; }
+  .section-num { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+  .section h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; }
+  .prose { font-size: 0.96rem; color: #374151; max-width: 780px; }
+  .prose + .prose { margin-top: 10px; }
+
+  /* ── CARDS ── */
+  .card-grid { display: grid; gap: 16px; margin-top: 20px; }
+  .grid-2 { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); }
+  .grid-3 { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+  .grid-4 { grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); }
+  .card {
+    background: white; border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: all .2s;
+  }
+  .card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.09); transform: translateY(-2px); }
+  .card-title { font-weight: 700; font-size: 0.93rem; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+  .card-body { font-size: 0.85rem; color: #4b5563; line-height: 1.65; }
+
+  .tag { display: inline-block; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+  .tag-teal { background: #ccfbf1; color: #065f46; }
+  .tag-violet { background: #ede9fe; color: #5b21b6; }
+  .tag-blue { background: #dbeafe; color: #1d4ed8; }
+  .tag-green { background: #d1fae5; color: #065f46; }
+  .tag-orange { background: #ffedd5; color: #9a3412; }
+  .tag-red { background: #fee2e2; color: #991b1b; }
+
+  /* ── HIGHLIGHT BOX ── */
+  .highlight-teal { background: linear-gradient(135deg,#f0fdfa,#ccfbf1); border: 1px solid #5eead4; border-radius: 14px; padding: 20px 24px; margin: 18px 0; color: #0f4c45; font-size: 0.93rem; }
+  .highlight-violet { background: linear-gradient(135deg,#faf5ff,#ede9fe); border: 1px solid #c4b5fd; border-radius: 14px; padding: 20px 24px; margin: 18px 0; color: #2e1065; font-size: 0.93rem; }
+
+  /* ── FEEDBACK OBJECTIVES FLOW ── */
+  .flow { display: flex; align-items: center; flex-wrap: wrap; gap: 0; margin: 22px 0; }
+  .flow-step { border-radius: 10px; padding: 11px 18px; font-size: 0.82rem; font-weight: 600; text-align: center; min-width: 100px; flex: 1; }
+  .flow-teal { background: linear-gradient(135deg, var(--ch7), #14b8a6); color: white; }
+  .flow-violet { background: linear-gradient(135deg, var(--ch9), #a78bfa); color: white; }
+  .flow-arrow { font-size: 18px; color: var(--muted); padding: 0 5px; flex-shrink: 0; }
+
+  /* ── CHARACTERISTICS DIAGRAM ── */
+  .chars-diagram {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .char-card {
+    border-radius: 14px;
+    padding: 20px;
+    text-align: center;
+    border: 1px solid var(--border);
+    background: white;
+    position: relative;
+    overflow: hidden;
+    transition: all .2s;
+  }
+  .char-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .char-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    border-radius: 14px 14px 0 0;
+  }
+  .cc1::before { background: linear-gradient(90deg, #0d9488, #14b8a6); }
+  .cc2::before { background: linear-gradient(90deg, #3b82f6, #60a5fa); }
+  .cc3::before { background: linear-gradient(90deg, #f59e0b, #fbbf24); }
+  .cc4::before { background: linear-gradient(90deg, #8b5cf6, #a78bfa); }
+  .cc5::before { background: linear-gradient(90deg, #ec4899, #f472b6); }
+  .char-emoji { font-size: 26px; margin-bottom: 10px; }
+  .char-name { font-weight: 700; font-size: 0.9rem; margin-bottom: 6px; }
+  .char-desc { font-size: 0.79rem; color: #4b5563; line-height: 1.55; }
+
+  /* ── CONSEQUENCES FLOW ── */
+  .consequence-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .con-positive { background: #f0fdf4; border: 1px solid #86efac; border-radius: 14px; padding: 20px; }
+  .con-negative { background: #fff1f2; border: 1px solid #fda4af; border-radius: 14px; padding: 20px; }
+  .con-title { font-weight: 700; font-size: 0.95rem; margin-bottom: 10px; }
+  .con-positive .con-title { color: #166534; }
+  .con-negative .con-title { color: #9f1239; }
+  .con-body { font-size: 0.85rem; color: #374151; line-height: 1.65; }
+
+  /* ── RECEIVING GUIDELINES ── */
+  .receive-list { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+  .receive-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    background: white; border: 1px solid var(--border);
+    border-radius: 12px; padding: 14px 18px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all .2s;
+  }
+  .receive-item:hover { border-color: #5eead4; box-shadow: 0 4px 14px rgba(13,148,136,0.1); }
+  .receive-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--ch7), #14b8a6);
+    color: white; font-weight: 700; font-size: 12px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+  .receive-text { font-size: 0.88rem; color: #374151; line-height: 1.6; }
+
+  /* ── FEEDBACK SKILLS LIST ── */
+  .fskills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+  .fskill-card {
+    background: white; border: 1px solid var(--border); border-radius: 14px;
+    padding: 20px 22px; box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+    transition: all .2s;
+    position: relative; overflow: hidden;
+  }
+  .fskill-card:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.09); }
+  .fskill-num {
+    position: absolute; top: 12px; right: 16px;
+    font-family: 'Playfair Display', serif; font-size: 2.2rem; font-weight: 900;
+    color: rgba(13,148,136,0.08); line-height: 1;
+  }
+  .fskill-icon { font-size: 20px; margin-bottom: 10px; }
+  .fskill-name { font-weight: 700; font-size: 0.93rem; margin-bottom: 7px; color: var(--ch7d); }
+  .fskill-desc { font-size: 0.84rem; color: #4b5563; line-height: 1.65; }
+
+  /* ── DIVIDER ── */
+  .divider { height: 1px; background: linear-gradient(90deg,transparent,var(--border),transparent); margin: 56px 0; }
+  .divider-heavy { height: 3px; background: linear-gradient(90deg, var(--ch7), var(--ch9)); border-radius: 100px; margin: 64px 0; }
+
+  /* ── STYLE CHAPTER ── */
+  .vars-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .var-card {
+    background: white; border: 1px solid var(--border); border-radius: 12px;
+    padding: 16px 18px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    transition: all .2s;
+  }
+  .var-card:hover { border-color: #c4b5fd; box-shadow: 0 4px 14px rgba(124,58,237,0.1); transform: translateY(-2px); }
+  .var-icon { font-size: 18px; margin-bottom: 8px; }
+  .var-name { font-weight: 700; font-size: 0.88rem; color: var(--ch9d); margin-bottom: 5px; }
+  .var-desc { font-size: 0.81rem; color: #4b5563; line-height: 1.6; }
+
+  /* ── WORD CHOICE DIAGRAM ── */
+  .word-choice-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 14px;
+    margin-top: 20px;
+  }
+  .wc-card {
+    border-radius: 14px; padding: 18px 18px;
+    text-align: center; transition: all .2s;
+    border: 2px solid transparent;
+  }
+  .wc-card:hover { transform: translateY(-3px); border-color: var(--ch9); }
+  .wc1 { background: #fdf4ff; }
+  .wc2 { background: #f0f9ff; }
+  .wc3 { background: #f0fdf4; }
+  .wc4 { background: #fffbeb; }
+  .wc5 { background: #fff1f2; }
+  .wc-emoji { font-size: 24px; margin-bottom: 9px; }
+  .wc-name { font-weight: 700; font-size: 0.87rem; margin-bottom: 6px; }
+  .wc-desc { font-size: 0.78rem; color: #4b5563; line-height: 1.55; }
+
+  /* ── DISCARD CHECKLIST ── */
+  .discard-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .discard-item {
+    display: flex; align-items: flex-start; gap: 10px;
+    background: white; border: 1px solid var(--border);
+    border-radius: 10px; padding: 12px 16px;
+    font-size: 0.85rem; color: #374151;
+    transition: all .2s;
+  }
+  .discard-item:hover { border-color: #c4b5fd; }
+  .discard-x {
+    width: 22px; height: 22px; border-radius: 50%;
+    background: #fee2e2; color: #dc2626;
+    font-size: 11px; font-weight: 800;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px;
+  }
+
+  /* ── SENTENCE STRUCTURE ── */
+  .sent-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; margin-top: 18px; }
+  .sent-card { border-radius: 12px; padding: 18px; border: 1px solid var(--border); background: white; }
+  .sent-icon { font-size: 20px; margin-bottom: 8px; }
+  .sent-title { font-weight: 700; font-size: 0.88rem; color: var(--ch9d); margin-bottom: 6px; }
+  .sent-desc { font-size: 0.82rem; color: #4b5563; line-height: 1.6; }
+
+  /* ── PARAGRAPH TYPES ── */
+  .para-flow {
+    display: flex; gap: 0; margin: 18px 0;
+    border-radius: 12px; overflow: hidden; border: 1px solid var(--border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .para-type { flex: 1; padding: 16px 14px; text-align: center; }
+  .pt1 { background: #dbeafe; }
+  .pt2 { background: #d1fae5; }
+  .pt3 { background: #fef3c7; }
+  .pt4 { background: #fee2e2; }
+  .para-type .pt-name { font-weight: 700; font-size: 0.85rem; margin-bottom: 4px; }
+  .para-type .pt-desc { font-size: 0.75rem; color: #374151; line-height: 1.4; }
+
+  /* ── OTHER FEATURES ── */
+  .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 14px; margin-top: 18px; }
+  .feat-card { border-radius: 12px; padding: 18px 20px; border: 1px solid var(--border); background: white; transition: all .2s; }
+  .feat-card:hover { border-color: #c4b5fd; box-shadow: 0 4px 14px rgba(124,58,237,0.08); transform: translateY(-2px); }
+  .feat-emoji { font-size: 22px; margin-bottom: 9px; }
+  .feat-name { font-weight: 700; font-size: 0.9rem; color: var(--ch9d); margin-bottom: 6px; }
+  .feat-desc { font-size: 0.82rem; color: #4b5563; line-height: 1.6; }
+
+  /* ── TECH ROLE BOX ── */
+  .tech-box {
+    background: linear-gradient(135deg, #0f172a, #1e3a5f);
+    border-radius: 16px; padding: 28px 28px;
+    color: white; margin-top: 20px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    gap: 18px;
+  }
+  .tech-item { border: 1px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 16px; }
+  .tech-icon { font-size: 22px; margin-bottom: 8px; }
+  .tech-name { font-weight: 700; font-size: 0.88rem; margin-bottom: 5px; color: #5eead4; }
+  .tech-desc { font-size: 0.80rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+  footer { background: var(--ink); color: rgba(255,255,255,0.5); text-align: center; padding: 28px; font-size: 0.82rem; margin-top: 32px; }
+  footer strong { color: #5eead4; }
+
+  @media(max-width:600px){
+    main { padding: 28px 16px; }
+    .header-inner { padding: 20px 16px 32px; }
+    .consequence-row { grid-template-columns: 1fr; }
+    .para-flow { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HEADER ── -->
+<header>
+  <div class="header-inner">
+    <div class="logo-row">
+      <div class="logo-mark">🦉</div>
+      <div class="logo-text">Scholar<span>Nest</span></div>
+    </div>
+    <div class="chapters-row">
+      <span class="ch-badge ch7-badge">📋 Chapter 7 — Feedback Skills</span>
+      <span class="ch-badge ch9-badge">✍️ Chapter 9 — Style</span>
+    </div>
+    <h1>Feedback <span class="t">Skills</span> &<br><span class="v">Style</span> in Communication</h1>
+    <p class="subtitle">A complete visual guide to giving & receiving feedback, and mastering writing style — from An Approach to Communication Skills.</p>
+    <div class="toc-pills">
+      <a href="#objectives" class="t">Objectives of Feedback</a>
+      <a href="#nature" class="t">Nature of Feedback</a>
+      <a href="#characteristics" class="t">Characteristics</a>
+      <a href="#consequences" class="t">Consequences</a>
+      <a href="#tech-role" class="t">Role of Technology</a>
+      <a href="#fb-skills" class="t">Feedback Skills</a>
+      <a href="#receiving" class="t">Receiving Feedback</a>
+      <a href="#style-vars" class="v">Variables of Style</a>
+      <a href="#word-choice" class="v">Word Choice</a>
+      <a href="#sentence" class="v">Sentence Structure</a>
+      <a href="#paragraph" class="v">Paragraph Structure</a>
+      <a href="#other-features" class="v">Other Features</a>
+    </div>
+  </div>
+</header>
+
+<main>
+
+  <!-- ════════════ CHAPTER 7 ════════════ -->
+  <div class="chapter-banner ch7-banner">
+    <div class="banner-num">7</div>
+    <div class="banner-content">
+      <h2>Feedback Skills</h2>
+      <p>Objectives · Nature · Characteristics · Consequences · Technology · Skills · Receiving Feedback</p>
+    </div>
+  </div>
+
+  <!-- ── 7.1 OBJECTIVES ── -->
+  <section class="section" id="objectives">
+    <div class="section-header">
+      <div class="section-icon ic-teal">🎯</div>
+      <div>
+        <div class="section-num">7.1</div>
+        <h2>Objectives of Feedback</h2>
+      </div>
+    </div>
+    <p class="prose"><strong>Feedback</strong> is the expression of an assessment of the level and the nature of performance in a task assigned, targeting a certain goal. The main objective of feedback is to help people <strong>improve their performance</strong> — it is a constructive help or advice whether phrased with positive or negative comments.</p>
+
+    <div class="flow" style="margin-top:22px;">
+      <div class="flow-step flow-teal">Clarity about the Task</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-teal">Know the Person</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-teal">Level & Requirement</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-teal">Set the Target</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step flow-teal">Methodology & Evaluation</div>
+    </div>
+
+    <div class="card-grid grid-3" style="margin-top:22px;">
+      <div class="card">
+        <div class="card-title">📌 Appraisal System</div>
+        <div class="card-body">Feedback is an appraisal system. The person giving feedback must know to what extent that feedback is going to improve the person receiving it.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🗣️ Phrase It Properly</div>
+        <div class="card-body">Before giving feedback one should phrase it properly so that it does not turn out to be offensive. The receiver must be ready and willing to receive it.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🚀 Drive Improvement</div>
+        <div class="card-body">Feedback should draw the target person's attention to areas where improvement is required and possible. It must positively influence the tenor and direction of the task. It should never be imposed.</div>
+      </div>
+    </div>
+
+    <div class="highlight-teal">
+      <strong>Key Principle:</strong> It is necessary to let ourselves know how others see our performance and how it has been evaluated. Feedback should go to him or her as a positive proposal aiming at acceptability and follow-up for anticipated improvement in future.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 7.2 NATURE ── -->
+  <section class="section" id="nature">
+    <div class="section-header">
+      <div class="section-icon ic-blue">🔍</div>
+      <div>
+        <div class="section-num">7.2</div>
+        <h2>Nature of Feedback</h2>
+      </div>
+    </div>
+    <p class="prose">Feedback may be a <strong>formal or an informal appraisal process</strong>. Telling people about their performance may bring us on difficult ground — a word out of place may offend a person. Therefore, while phrasing feedback we must exercise conversation control.</p>
+
+    <div class="card-grid grid-2" style="margin-top:20px;">
+      <div class="card">
+        <span class="tag tag-teal">When Given</span>
+        <div class="card-title">📅 Timing</div>
+        <div class="card-body">Feedback is given most often when it is requested. Where there is a formal system, it is given as a routine appraisal. Sometimes on exigencies it is given to effect improvement in performance. It must also state what standards it aims at.</div>
+      </div>
+      <div class="card">
+        <span class="tag tag-teal">How Phrased</span>
+        <div class="card-title">📝 Based on Facts</div>
+        <div class="card-body">Feedback should be based on facts and it should be phrased giving factual details. Our feedback should not generate an ill-feeling. A proper observation of performance is required for proper feedback.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 7.3 CHARACTERISTICS ── -->
+  <section class="section" id="characteristics">
+    <div class="section-header">
+      <div class="section-icon ic-green">⭐</div>
+      <div>
+        <div class="section-num">7.3</div>
+        <h2>Characteristics of Feedback</h2>
+      </div>
+    </div>
+    <p class="prose">Effective feedback has five key characteristics — each one is essential for the feedback to serve its purpose of facilitating improvement.</p>
+
+    <div class="chars-diagram">
+      <div class="char-card cc1">
+        <div class="char-emoji">👤</div>
+        <div class="char-name">Personal Element</div>
+        <div class="char-desc">Feedback is based on one's personal evaluation — it may vary from person to person. It is related to a person and may even involve personal allegations or name-calling. However, feedback can always be converted into a positive proposal.</div>
+      </div>
+      <div class="char-card cc2">
+        <div class="char-emoji">👁️</div>
+        <div class="char-name">Observation</div>
+        <div class="char-desc">Feedback is based on observation of a person's performance. It should depict the factual position. Proper feedback is based on actual situation — we should comment only on what we see, not act in a prejudiced manner.</div>
+      </div>
+      <div class="char-card cc3">
+        <div class="char-emoji">🔬</div>
+        <div class="char-name">Detailed & Specific</div>
+        <div class="char-desc">Feedback with a detailed description of the event concentrates on facts and leads to improvement. Unless feedback is made specific about the lapses in manner, methodology, or personal trait, improvement cannot take place.</div>
+      </div>
+      <div class="char-card cc4">
+        <div class="char-emoji">🎼</div>
+        <div class="char-name">Tone</div>
+        <div class="char-desc">The tone of feedback is very important — it could be positive or negative, formal or informal. A sincere and critical feedback related to a specific area becomes very effective. How feedback is delivered has a lot of significance in its expected consequence.</div>
+      </div>
+      <div class="char-card cc5">
+        <div class="char-emoji">🤝</div>
+        <div class="char-name">Approach</div>
+        <div class="char-desc">The best kind of approach facilitates a self-critique. By asking appropriate open-ended questions we can get the other person to give the feedback themselves. The approach in feedback should be supportive and constructive.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 7.4 CONSEQUENCES ── -->
+  <section class="section" id="consequences">
+    <div class="section-header">
+      <div class="section-icon ic-orange">⚡</div>
+      <div>
+        <div class="section-num">7.4</div>
+        <h2>Consequences of Feedback</h2>
+      </div>
+    </div>
+    <p class="prose">The nature of feedback directly determines its consequence — whether it produces improvement or generates defensiveness.</p>
+
+    <div class="consequence-row">
+      <div class="con-positive">
+        <div class="con-title">✅ Sincere, Positive & Constructive Feedback</div>
+        <div class="con-body">May effect an expected change or improvement in performance. Even when feedback does not look like advice, one should regard the criticism as advice — consider a negative statement as a positive proposal, and convert the same into a positive proposal for action. Giving personal feedback without raising any offensiveness, aggression or defensiveness is an art.</div>
+      </div>
+      <div class="con-negative">
+        <div class="con-title">❌ Critical or General Feedback</div>
+        <div class="con-body">Proves ineffective — makes the recipient not know how to respond. Sometimes someone is directly critical of us because we have not performed as per their wish. In consequence we may feel defensive or want to attack the person who gives the feedback. An attacking response may be right but may not get us any further feedback.</div>
+      </div>
+    </div>
+
+    <div class="highlight-teal" style="margin-top:18px;">
+      <strong>Best Practice:</strong> We should listen to what the other person has to say about our feedback and if he or she makes excuses and apologises, convert these positive results by taking a <em>problem-centred attitude</em>.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 7.5 TECHNOLOGY ── -->
+  <section class="section" id="tech-role">
+    <div class="section-header">
+      <div class="section-icon ic-teal">💻</div>
+      <div>
+        <div class="section-num">7.5</div>
+        <h2>Role of Modern Technology in Feedback</h2>
+      </div>
+    </div>
+    <p class="prose">Many of us do not like to receive criticism of ourselves. To deal with this problem, modern technology provides us with powerful tools to see our own performance objectively.</p>
+
+    <div class="tech-box">
+      <div class="tech-item">
+        <div class="tech-icon">🎙️</div>
+        <div class="tech-name">Audio Recorders</div>
+        <div class="tech-desc">Learn about your tone of delivery, your voice quality, the use of non-verbal means, and mannerisms apart from proficiency in the language used.</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon">📹</div>
+        <div class="tech-name">Video Recorders</div>
+        <div class="tech-desc">See on your own how you perform in a discussion, meeting, programmed speech, or oral presentation. Review and improve your performance.</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon">📊</div>
+        <div class="tech-name">Impact Analysis</div>
+        <div class="tech-desc">Modern technology helps see the impact of your performance in terms of the response of other participants, how well you use time, and how well you express viewpoints.</div>
+      </div>
+      <div class="tech-item">
+        <div class="tech-icon">🔄</div>
+        <div class="tech-name">Behaviour Adjustment</div>
+        <div class="tech-desc">These means help get a clear picture of your own performance which, unlike indirect feedback, may make you adjust your behaviour accordingly and improve performance.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 7.6 FEEDBACK SKILLS ── -->
+  <section class="section" id="fb-skills">
+    <div class="section-header">
+      <div class="section-icon ic-teal">🛠️</div>
+      <div>
+        <div class="section-num">7.6</div>
+        <h2>Feedback Skills</h2>
+      </div>
+    </div>
+    <p class="prose">Seven core skills define effective feedback delivery. Each skill ensures that the feedback achieves its purpose — improvement — without damaging the relationship.</p>
+
+    <div class="fskills-grid">
+      <div class="fskill-card">
+        <div class="fskill-num">1</div>
+        <div class="fskill-icon">👁️</div>
+        <div class="fskill-name">Observations without Judgements</div>
+        <div class="fskill-desc">Make personal feedback descriptive with frankness, sincerity and clarity. Do not try to be evaluative. Describe observations without making judgements showing your leanings or intentions towards the facts, being good or bad. Leave the assessment to the individuals — the very description may turn out to be intelligent feedback.</div>
+      </div>
+      <div class="fskill-card">
+        <div class="fskill-num">2</div>
+        <div class="fskill-icon">🎯</div>
+        <div class="fskill-name">Concentration on Specificity</div>
+        <div class="fskill-desc">Feedback should not only be factual but point-specific. It should not be a general assessment or description — it should be issue-specific. This kind of feedback becomes easier for someone to relate to rather than a response to general statements.</div>
+      </div>
+      <div class="fskill-card">
+        <div class="fskill-num">3</div>
+        <div class="fskill-icon">🌱</div>
+        <div class="fskill-name">To be Positive and Constructive</div>
+        <div class="fskill-desc">Try to be constructive in feedback to have positive results. Negative statements may offend people. Do not tell people what they should not do — help them indirectly to find out what is to be done. Also tell the person the positive points of their work and working.</div>
+      </div>
+      <div class="fskill-card">
+        <div class="fskill-num">4</div>
+        <div class="fskill-icon">🗺️</div>
+        <div class="fskill-name">Indicating the Ways to Improve</div>
+        <div class="fskill-desc">Explain and emphasise the practical purpose of the feedback, and say that if properly followed the receiver may benefit from it. Feedback should suggest specific areas where improvements are required and how the improvements will be under the control of the recipient.</div>
+      </div>
+      <div class="fskill-card">
+        <div class="fskill-num">5</div>
+        <div class="fskill-icon">🤲</div>
+        <div class="fskill-name">Generating a Feel for Receiving Feedback</div>
+        <div class="fskill-desc">Do not impose feedback on someone — unless feedback is asked for, it should not be given. If the person does not like to receive the feedback, they should be clearly told why the feedback is given to them.</div>
+      </div>
+      <div class="fskill-card">
+        <div class="fskill-num">6</div>
+        <div class="fskill-icon">⏰</div>
+        <div class="fskill-name">Proper Timing of Feedback</div>
+        <div class="fskill-desc">Feedback should be timed properly. Feedback is not saying a few quick words to someone in a corridor to improve their performance. Judge particularly when someone is in a mood to receive feedback. Taking enough time to explain the necessity of feedback is important.</div>
+      </div>
+      <div class="fskill-card">
+        <div class="fskill-num">7</div>
+        <div class="fskill-icon">🤝</div>
+        <div class="fskill-name">Feedback for Agreement</div>
+        <div class="fskill-desc">Feedback should not create differences or rivals. Feedback should be so phrased that everything is clarified and there is a resultant agreement between the recipient and the giver of feedback.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 7.7 RECEIVING FEEDBACK ── -->
+  <section class="section" id="receiving">
+    <div class="section-header">
+      <div class="section-icon ic-green">📥</div>
+      <div>
+        <div class="section-num">7.7</div>
+        <h2>Receiving Feedback</h2>
+      </div>
+    </div>
+    <p class="prose">We should not try to be aggressive to someone who gives us feedback. A person who is very critical about our performance at worst makes us defensive. We should be <strong>positive and sportive</strong> enough to receive our criticism. Following are guidelines for us as recipients:</p>
+
+    <div class="receive-list">
+      <div class="receive-item"><div class="receive-num">1</div><div class="receive-text">Take criticism as advice — do not be defensive or aggressive.</div></div>
+      <div class="receive-item"><div class="receive-num">2</div><div class="receive-text">Make a brief and accurate summary of the criticism received.</div></div>
+      <div class="receive-item"><div class="receive-num">3</div><div class="receive-text">Show readiness and inquisitiveness to learn about the other person's feedback about us.</div></div>
+      <div class="receive-item"><div class="receive-num">4</div><div class="receive-text">Take the feedback in a problem-solving way — instead of getting angry, smile at the mentioning of the appropriate point of criticism.</div></div>
+      <div class="receive-item"><div class="receive-num">5</div><div class="receive-text">Seek suggestions from the person giving feedback regarding the ways and means of improvement.</div></div>
+      <div class="receive-item"><div class="receive-num">6</div><div class="receive-text">Express gratitude to the person who has found time to find out good and bad points of our nature and working impartially and objectively.</div></div>
+      <div class="receive-item"><div class="receive-num">7</div><div class="receive-text">Start improving in the areas and issues where improvements are required.</div></div>
+    </div>
+  </section>
+
+  <!-- ════════ CHAPTER BREAK ════════ -->
+  <div class="divider-heavy"></div>
+
+  <!-- ════════════ CHAPTER 9 ════════════ -->
+  <div class="chapter-banner ch9-banner">
+    <div class="banner-num">9</div>
+    <div class="banner-content">
+      <h2>Style in Writing</h2>
+      <p>Variables of Style · Choice of Words · Discarding · Sentence Structure · Paragraph Structure · Other Features</p>
+    </div>
+  </div>
+
+  <!-- ── 9.1 VARIABLES ── -->
+  <section class="section" id="style-vars">
+    <div class="section-header">
+      <div class="section-icon ic-violet">✍️</div>
+      <div>
+        <div class="section-num">9.1</div>
+        <h2>Variables Characterizing Style</h2>
+      </div>
+    </div>
+    <p class="prose">Style is the way we select the words and arrange them as elements of various structures. Our style depends also upon our readers — we should be aware of our readers or audience and use the language that suits them depending upon the thought and occasion.</p>
+
+    <div class="highlight-violet">
+      <strong>Definition:</strong> Style is thus the way we select the words and arrange them as elements of various structures. Clean writing means finding the right words for right use. Our command of words is nothing but a command over life and experience.
+    </div>
+
+    <div class="vars-grid">
+      <div class="var-card"><div class="var-icon">🔤</div><div class="var-name">Choice of Words</div><div class="var-desc">Selecting the right, familiar, concrete, specific, and short word for maximum clarity and impact.</div></div>
+      <div class="var-card"><div class="var-icon">✂️</div><div class="var-name">Discarding Modifiers</div><div class="var-desc">Modifiers of nouns and verbs make text vague and subjective — use them carefully to avoid confusion.</div></div>
+      <div class="var-card"><div class="var-icon">🚫</div><div class="var-name">Discarding Fancy Words</div><div class="var-desc">High-flying, ornamental, bombastic words down the meaning. Plain words that are more effective should be selected.</div></div>
+      <div class="var-card"><div class="var-icon">🔁</div><div class="var-name">Discarding Clichés</div><div class="var-desc">Words that have lost their effectiveness due to overuse can never be appropriate for effective style.</div></div>
+      <div class="var-card"><div class="var-icon">🌫️</div><div class="var-name">Discarding Woolly Thinking Words</div><div class="var-desc">Words like "numberwise" and "resolution-wise" impede communication and should be discarded.</div></div>
+      <div class="var-card"><div class="var-icon">🌍</div><div class="var-name">Discarding Foreign Words</div><div class="var-desc">Foreign words impress readers but mystify them very soon. Accepted foreign abbreviations need not be avoided.</div></div>
+      <div class="var-card"><div class="var-icon">🔄</div><div class="var-name">Controlling Passive Voice</div><div class="var-desc">Excessive passive voice makes style stodgy. Active voice conveys businesslike commitment and urgency. Balance is required.</div></div>
+      <div class="var-card"><div class="var-icon">👤</div><div class="var-name">Right Personal Pronoun</div><div class="var-desc">Modern trend is to use the first person pronoun directly. Conservative organizations continue using the third person.</div></div>
+      <div class="var-card"><div class="var-icon">🗑️</div><div class="var-name">Avoiding Redundancy</div><div class="var-desc">Eliminate parts of a message whose removal does not yield a loss of information. Repetitions and unnecessary words are superfluous.</div></div>
+      <div class="var-card"><div class="var-icon">📏</div><div class="var-name">Sentence Structure & Length</div><div class="var-desc">Deciding placement of modifiers, limiting complex sentences, and right use of grammar for readability.</div></div>
+      <div class="var-card"><div class="var-icon">📄</div><div class="var-name">Paragraph Structure & Length</div><div class="var-desc">Each paragraph conveys one idea through four types of sentences: introducers, developers, modulators, terminators.</div></div>
+      <div class="var-card"><div class="var-icon">🌟</div><div class="var-name">Other Important Features</div><div class="var-desc">Signposts, no surrender to words, rewriting, affecting desirable tone and colour in the text.</div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 9.1.1 WORD CHOICE ── -->
+  <section class="section" id="word-choice">
+    <div class="section-header">
+      <div class="section-icon ic-violet">🔤</div>
+      <div>
+        <div class="section-num">9.1.1</div>
+        <h2>Choice of Words</h2>
+      </div>
+    </div>
+    <p class="prose">For effecting a style in writing, the choice of right words and phrases is very important. There are different words for different contexts — the suitability of words depends upon the suitability of their meanings.</p>
+
+    <div class="word-choice-grid">
+      <div class="wc-card wc1">
+        <div class="wc-emoji">✅</div>
+        <div class="wc-name">The Right Word</div>
+        <div class="wc-desc">For attaining an effective style there is a need for a constant concern for selecting the right word at the right place and a desire to extract the meaning.</div>
+      </div>
+      <div class="wc-card wc2">
+        <div class="wc-emoji">🤝</div>
+        <div class="wc-name">The Familiar Word</div>
+        <div class="wc-desc">Familiar words convey sharp images; unfamiliar ones convey blurred ones. Avoid excessive jargon (technical terminology) as it causes trouble for readers and displays verbosity.</div>
+      </div>
+      <div class="wc-card wc3">
+        <div class="wc-emoji">🧱</div>
+        <div class="wc-name">The Concrete Word</div>
+        <div class="wc-desc">Concrete words have a limited range of interpretation and convey more definite meanings than abstract words. They are more forceful — prefer them for effective style.</div>
+      </div>
+      <div class="wc-card wc4">
+        <div class="wc-emoji">🎯</div>
+        <div class="wc-name">The Specific Word</div>
+        <div class="wc-desc">Unlike general words, specific words effect clarity in writing. Specific words create the image immediately in the mind of the reader.</div>
+      </div>
+      <div class="wc-card wc5">
+        <div class="wc-emoji">✂️</div>
+        <div class="wc-name">The Short Word</div>
+        <div class="wc-desc">For effective style the number of longer words (3+ syllables) should be limited. Short words (1–2 syllables) are simple and direct — using more long words than short ones overtaxes the reader.</div>
+      </div>
+    </div>
+
+    <!-- Discard list -->
+    <h3 style="margin:28px 0 4px; font-family:'Playfair Display',serif; font-size:1.1rem; color:var(--ch9d);">Words & Patterns to Discard</h3>
+    <p class="prose" style="margin-bottom:4px;">For effective style, avoid these categories of words:</p>
+    <div class="discard-list">
+      <div class="discard-item"><div class="discard-x">✗</div><div>Modifiers that make text vague and subjective</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Fancy, ornamental or bombastic words</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Clichés — words overused to the point of losing effectiveness</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Words denoting woolly thinking (e.g. "numberwise")</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Foreign words (except accepted abbreviations)</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Excessive passive voice constructions</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Redundant and superfluous repetitions</div></div>
+      <div class="discard-item"><div class="discard-x">✗</div><div>Unfamiliar jargon and complicated terminology</div></div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 9.1.10 SENTENCE STRUCTURE ── -->
+  <section class="section" id="sentence">
+    <div class="section-header">
+      <div class="section-icon ic-violet">📏</div>
+      <div>
+        <div class="section-num">9.1.10</div>
+        <h2>Sentence Structure and Length</h2>
+      </div>
+    </div>
+    <p class="prose">The effective style yields a greater comprehension in the text. Too many complex and compound sentences hamper reading comprehension. A <strong>balance and harmony</strong> between simple, complex, and compound sentences is needed. Variety in length avoids monotony.</p>
+
+    <div class="sent-grid">
+      <div class="sent-card">
+        <div class="sent-icon">📌</div>
+        <div class="sent-title">Placement of Modifiers</div>
+        <div class="sent-desc">Experiment with placement of adjectives and adverbs. Handling of adverbs requires greater caution — the change in their placement changes the meaning too.</div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-icon">⚖️</div>
+        <div class="sent-title">Balance Complex & Compound</div>
+        <div class="sent-desc">Too many long sentences increase difficulty; too many short sentences in a series read like shots at a rifle range. There should be a short sentence in the midst of several long sentences for variety.</div>
+      </div>
+      <div class="sent-card">
+        <div class="sent-icon">📖</div>
+        <div class="sent-title">Right Use of Grammar</div>
+        <div class="sent-desc">Don't shorten a sentence with a conjunction and don't split infinitives. There must be a verb in every sentence. However, vivid impacts are created when these rules are broken — this has a powerful impact on the reader.</div>
+      </div>
+    </div>
+
+    <div class="highlight-violet" style="margin-top:18px;">
+      <strong>Pro Tip:</strong> Sentences should begin with a verb or a phrase occasionally. We should find out by reading aloud whether our sentences are too long or too short.
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 9.1.11 PARAGRAPH STRUCTURE ── -->
+  <section class="section" id="paragraph">
+    <div class="section-header">
+      <div class="section-icon ic-violet">📄</div>
+      <div>
+        <div class="section-num">9.1.11</div>
+        <h2>Paragraph Structure and Length</h2>
+      </div>
+    </div>
+    <p class="prose">A sentence conveys one thought whereas a <strong>paragraph conveys one idea</strong>. The idea is expressed through a topic sentence — which may be placed at the beginning or simply implied. Sentences in a paragraph are of four types:</p>
+
+    <div class="para-flow">
+      <div class="para-type pt1">
+        <div class="pt-name">Introducers</div>
+        <div class="pt-desc">Establish the topic and provide smooth transition from the preceding paragraph</div>
+      </div>
+      <div class="para-type pt2">
+        <div class="pt-name">Developers</div>
+        <div class="pt-desc">Develop the idea, clarify it with details and thoughts</div>
+      </div>
+      <div class="para-type pt3">
+        <div class="pt-name">Modulators</div>
+        <div class="pt-desc">Provide smooth transition between the sentences of the paragraph</div>
+      </div>
+      <div class="para-type pt4">
+        <div class="pt-name">Terminators</div>
+        <div class="pt-desc">Conclude the discussion by summarizing the contents of the paragraph</div>
+      </div>
+    </div>
+
+    <div class="card-grid grid-2" style="margin-top:14px;">
+      <div class="card">
+        <div class="card-title">📐 Ideal Text Length</div>
+        <div class="card-body">The ideal text consists of <strong>four to six paragraphs</strong> of <strong>two to ten sentences</strong> each. A skilful writer breaks the text into short paragraphs, gives due emphasis to the topic sentence and checks transitional devices for smooth movement and development.</div>
+      </div>
+      <div class="card">
+        <div class="card-title">🔗 Logical Arrangement</div>
+        <div class="card-body">Long paragraphs do not provide ease in reading. A paragraph dealing with a complex idea naturally increases its length. Attention is paid to the logical arrangement of all sentences, ensuring all contribute to the development of the idea.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- ── 9.2 OTHER FEATURES ── -->
+  <section class="section" id="other-features">
+    <div class="section-header">
+      <div class="section-icon ic-pink">🌟</div>
+      <div>
+        <div class="section-num">9.2</div>
+        <h2>Other Important Features of Effective Style</h2>
+      </div>
+    </div>
+    <p class="prose">Beyond word choice and sentence structure, effective style has four additional hallmarks that distinguish skilful writers.</p>
+
+    <div class="features-grid">
+      <div class="feat-card">
+        <div class="feat-emoji">🪧</div>
+        <div class="feat-name">Signposts</div>
+        <div class="feat-desc">An efficient writer provides signposts in the text to tell the reader what is taken up at various stages or sections. This helps the reader follow the line of thought very easily. The signpost comes in the form of a sentence or a short paragraph between two paragraphs.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-emoji">🧠</div>
+        <div class="feat-name">No Surrender to Words</div>
+        <div class="feat-desc">A skilful writer does not surrender to words. In the process of writing, the words that encode facts or information also try to take the writer's mind into their grip. The author so trapped sacrifices one idea for the sake of another — a skilful writer sticks to their line of thinking.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-emoji">✏️</div>
+        <div class="feat-name">Rewriting</div>
+        <div class="feat-desc">A skilful writer keeps on rewriting the text by correcting errors in punctuations, spellings, capitalization, following stylistic conventions the text deserves, and deleting or rearranging material to effect greater clarity and coherence. They experiment with the order of the text to effect greater readability.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-emoji">🎨</div>
+        <div class="feat-name">Affecting Desirable Tone and Colour</div>
+        <div class="feat-desc">A skilful writer tries to effect the desirable tone and colour in the text — a style that generates and sustains the reader's interest. They take the help of various means creating suspense, surprise, anxiety, and inquisitiveness by a technique of orchestration, providing magnetic thoughts from various corners so that the reader is glued to the text.</div>
+      </div>
+    </div>
+
+    <div class="highlight-violet" style="margin-top:22px;">
+      <strong>Clean Writing =</strong> Finding the right words for right use. There are different registers for different fields — there should not be a mixture of traditional standard variety and modern colloquial variety of English, as this makes words and expressions out of place.
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div>
+    <strong>ScholarNest</strong> · Chapter 7: Feedback Skills (pp. 79–84) &amp; Chapter 9: Style (pp. 102–107)<br>
+    From <em>An Approach to Communication Skills</em>
+  </div>
+</footer>
+
+</body>
+</html>
